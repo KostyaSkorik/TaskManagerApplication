@@ -32,7 +32,7 @@
 <body>
 
 <div class="registration-container">
-    <h2 class="registration-heading">Registration Form</h2>
+    <h2 class="registration-heading">Registration Лена жопааа</h2>
     <form action="${pageContext.request.contextPath}/registration" method="post">
         <label for="username">UserName:</label>
         <input type="text" id="username" name="username" class="input-field" required><br>

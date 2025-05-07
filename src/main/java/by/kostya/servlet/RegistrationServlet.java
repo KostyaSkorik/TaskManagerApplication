@@ -1,5 +1,6 @@
 package by.kostya.servlet;
 
+import by.kostya.dto.UserDto;
 import by.kostya.entity.Role;
 import by.kostya.utils.JSPHelper;
 import by.kostya.utils.URLPath;
@@ -10,16 +11,26 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 
 @WebServlet(URLPath.REGISTRATION_PATH)
 public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(Arrays.toString(Role.values()));
         req.setAttribute("roles", Role.values());
         req.getRequestDispatcher(JSPHelper.getPath("registration")).forward(req, resp);
+
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        UserDto userDto = UserDto.builder()
+                .username(req.getParameter("username"))
+                .email(req.getParameter("email"))
+                .password(req.getParameter("password"))
+                .role(Role.valueOf(req.getParameter("role")))
+                .build();
+        System.out.println(userDto);
+
+    }
 }
