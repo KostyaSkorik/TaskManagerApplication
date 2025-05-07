@@ -30,6 +30,9 @@ public class RegistrationServlet extends HttpServlet {
                 .password(req.getParameter("password"))
                 .role(Role.valueOf(req.getParameter("role")))
                 .build();
+        if(req.getParameter("role").equals(Role.ADMIN.toString())){
+            System.out.println(req.getParameter("secretCode"));
+        }
         System.out.println(userDto);
 
     }
