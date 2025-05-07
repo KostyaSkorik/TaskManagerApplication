@@ -32,7 +32,7 @@
 <body>
 
 <div class="registration-container">
-    <h2 class="registration-heading">Registration Лена жопааа</h2>
+    <h2 class="registration-heading">Registration</h2>
     <form action="${pageContext.request.contextPath}/registration" method="post">
         <label for="username">UserName:</label>
         <input type="text" id="username" name="username" class="input-field" required><br>
@@ -73,11 +73,6 @@
             document.getElementById('secretCode').required = false;
         }
     }
-
-    // Вызываем при загрузке страницы на случай, если форма перезагружается с ошибкой
-    document.addEventListener('DOMContentLoaded', function() {
-        checkRole();
-    });
 </script>
 
 </body>
