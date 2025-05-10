@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "users")
+@Table(name = "users", schema = "task_manager")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

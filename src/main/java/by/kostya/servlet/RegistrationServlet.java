@@ -2,6 +2,7 @@ package by.kostya.servlet;
 
 import by.kostya.dto.UserDto;
 import by.kostya.entity.Role;
+import by.kostya.service.UserService;
 import by.kostya.utils.JSPHelper;
 import by.kostya.utils.URLPath;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,8 @@ import java.io.IOException;
 
 @WebServlet(URLPath.REGISTRATION_PATH)
 public class RegistrationServlet extends HttpServlet {
+    private static final UserService userService = UserService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("roles", Role.values());
