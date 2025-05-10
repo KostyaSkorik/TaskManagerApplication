@@ -36,7 +36,7 @@ public class RegistrationServlet extends HttpServlet {
         if(req.getParameter("role").equals(Role.ADMIN.toString())){
             System.out.println(req.getParameter("secretCode"));
         }
-        System.out.println(userDto);
+        userService.creatUser(userDto);
 
     }
 }

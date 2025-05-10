@@ -5,6 +5,7 @@
 <hibernate-configuration>
   <session-factory>
     <property name="connection.url">jdbc:postgresql://localhost:5432/postgres</property>
+    <property name="hibernate.default_schema">task_manager</property>
     <property name="connection.driver_class">org.postgresql.Driver</property>
     <property name="connection.username">postgres</property>
     <property name="connection.password">root</property>
@@ -12,6 +13,8 @@
     <property name="format_sql">true</property>
     <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
+    <mapping class="by.kostya.entity.User"/>
+<!--    <mapping class="by.kostya.entity.Task"/>-->
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
   </session-factory>
