@@ -14,15 +14,18 @@
             border-radius: 10px;
             background-color: #f9f9f9;
         }
+
         .registration-heading {
             text-align: center;
         }
+
         .input-field {
             width: 100%;
             padding: 8px;
             margin: 5px 0;
             box-sizing: border-box;
         }
+
         #secretCodeContainer {
             display: none;
             margin-top: 10px;
@@ -59,6 +62,11 @@
         <input type="submit" value="Register" class="input-field">
     </form>
 </div>
+<c:if test="${not empty requestScope.errors_message}">
+    <div style="color: red" class="registration-heading">
+        <span>${requestScope.errors_message}</span><br>
+    </div>
+</c:if>
 
 <script>
     function checkRole() {

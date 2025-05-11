@@ -5,6 +5,7 @@ import by.kostya.dao.UserDao;
 import by.kostya.dto.UserDto;
 import by.kostya.entity.User;
 import by.kostya.mapper.UserMapper;
+import jakarta.validation.ConstraintViolationException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -18,13 +19,16 @@ public class UserService {
         return INSTANCE;
     }
 
-    public Long creatUser(UserDto userDto){
+    public Long creatUser(UserDto userDto) throws ConstraintViolationException {
         /*TO-DO Validation
         Думаю можно отлавливать exceptions от hibernate валидатора
          */
+
+        //TODO validation
         User user = userMapper.mapFrom(userDto);
         var result = userDao.save(user);
         return result.getId();
+
     }
 
 }

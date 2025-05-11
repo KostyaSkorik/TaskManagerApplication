@@ -2,6 +2,7 @@ package by.kostya.servlet;
 
 import by.kostya.dto.UserDto;
 import by.kostya.entity.Role;
+import by.kostya.exception.DuplicateException;
 import by.kostya.service.UserService;
 import by.kostya.utils.JSPHelper;
 import by.kostya.utils.URLPath;
@@ -10,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ConstraintViolationException;
 
 import java.io.IOException;
 
@@ -26,7 +28,7 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDto userDto = UserDto.builder()
                 .username(req.getParameter("username"))
                 .email(req.getParameter("email"))
@@ -36,7 +38,12 @@ public class RegistrationServlet extends HttpServlet {
         if(req.getParameter("role").equals(Role.ADMIN.toString())){
             System.out.println(req.getParameter("secretCode"));
         }
-        userService.creatUser(userDto);
+        try {
+            userService.creatUser(userDto);
+        }catch (ConstraintViolationException | DuplicateException ex){
+            req.setAttribute("errors_message",ex.getMessage());
+            req.getRequestDispatcher(JSPHelper.getPath("registration")).forward(req, resp);
+        }
 
     }
 }
