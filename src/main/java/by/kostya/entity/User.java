@@ -2,7 +2,6 @@ package by.kostya.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "users", schema = "task_manager", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
+@Table(name = "users", schema = "task_manager")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +32,6 @@ public class User {
     @Column(name = "is_active")
     private boolean isActive;
 
-    @NotNull(message = "Role must be not null")
     @Enumerated(EnumType.STRING)
     private Role role;
 }

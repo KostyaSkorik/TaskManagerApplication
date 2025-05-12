@@ -22,7 +22,6 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("roles", Role.values());
         req.getRequestDispatcher(JSPHelper.getPath("registration")).forward(req, resp);
 
     }
@@ -33,8 +32,9 @@ public class RegistrationServlet extends HttpServlet {
                 .username(req.getParameter("username"))
                 .email(req.getParameter("email"))
                 .password(req.getParameter("password"))
-                .role(Role.valueOf(req.getParameter("role")))
+                .role(Role.valueOf(req.getParameter("role").isBlank() ? "USER":req.getParameter("role")))
                 .build();
+        System.out.println(userDto);
         if(req.getParameter("role").equals(Role.ADMIN.toString())){
             System.out.println(req.getParameter("secretCode"));
         }

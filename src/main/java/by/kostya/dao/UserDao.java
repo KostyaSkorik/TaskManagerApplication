@@ -25,14 +25,13 @@ public class UserDao {
 
 
     public User save(User user) {
-        @Cleanup SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        @Cleanup Session session = sessionFactory.openSession();
+        @Cleanup SessionFactory sessionFactory = HibernateUtil.openSessionFactory();
         @Cleanup ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
 
-        if (existsByUsername(session, user.getUsername())) {
+        if (existsByUsername(sessionFactory, user.getUsername())) {
             throw new DuplicateException("Username already exist");
         }
-        if (existsByEmail(session, user.getEmail())) {
+        if (existsByEmail(sessionFactory, user.getEmail())) {
             throw new DuplicateException("Email already exist");
         }
 
@@ -43,6 +42,7 @@ public class UserDao {
             throw new ConstraintViolationException(validationResult);
 
         }else {
+            @Cleanup Session session = sessionFactory.openSession();
             session.beginTransaction();
             session.persist(user);
             session.getTransaction().commit();
@@ -50,12 +50,16 @@ public class UserDao {
         }
     }
 
-    private boolean existsByUsername(Session session, String username){
-        return !(new JPAQuery<User>(session).select(QUser.user).from(QUser.user).where(QUser.user.username.eq(username))
+    private boolean existsByUsername(SessionFactory sessionFactory, String username){
+        @Cleanup Session session = sessionFactory.openSession();
+        return !(new JPAQuery<User>(session).select(QUser.user).from(QUser.user)
+                .where(QUser.user.username.eq(username))
                 .fetch().isEmpty());
     }
-    private boolean existsByEmail(Session session, String email){
-        return !(new JPAQuery<User>(session).select(QUser.user).from(QUser.user).where(QUser.user.email.eq(email))
+    private boolean existsByEmail(SessionFactory sessionFactory, String email){
+        @Cleanup Session session = sessionFactory.openSession();
+        return !(new JPAQuery<User>(session).select(QUser.user).from(QUser.user)
+                .where(QUser.user.email.eq(email))
                 .fetch().isEmpty());
     }
 }
