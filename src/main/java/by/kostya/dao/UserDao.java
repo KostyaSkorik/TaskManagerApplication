@@ -3,6 +3,7 @@ package by.kostya.dao;
 import by.kostya.entity.QUser;
 import by.kostya.entity.User;
 import by.kostya.exception.DuplicateException;
+import by.kostya.utils.BcryptUtils;
 import by.kostya.utils.HibernateUtil;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.validation.ConstraintViolationException;
@@ -14,6 +15,8 @@ import lombok.Cleanup;
 import lombok.NoArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserDao {
@@ -61,5 +64,22 @@ public class UserDao {
         return !(new JPAQuery<User>(session).select(QUser.user).from(QUser.user)
                 .where(QUser.user.email.eq(email))
                 .fetch().isEmpty());
+    }
+
+    public Optional<User> findByUsernameAndPassword(String username, String password){
+        @Cleanup SessionFactory sessionFactory = HibernateUtil.openSessionFactory();
+        @Cleanup Session session = sessionFactory.openSession();
+//        User user = jpaQuery.select(QUser.user).from(QUser.user).where(QUser.user.username.eq(username)
+//                .and(QUser.user.passwordHash.eq(BcryptUtils.generateHash(password)))).fetchFirst();
+//        return Optional.ofNullable(user);
+        JPAQuery<User> jpaQuery = new JPAQuery<>(session);
+        User user = jpaQuery.select(QUser.user).from(QUser.user).where(QUser.user.username.eq(username)).fetchOne();
+        Optional<User> optionalUser = Optional.ofNullable(user);
+        if(optionalUser.isPresent() && BcryptUtils.checkPwd(password,user.getPasswordHash())){
+            return optionalUser;
+        }else {
+            return Optional.empty();
+        }
+
     }
 }

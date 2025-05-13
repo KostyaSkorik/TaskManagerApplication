@@ -2,12 +2,10 @@ package by.kostya.dao;
 
 import by.kostya.entity.Role;
 import by.kostya.entity.User;
-import junit.framework.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class UserDaoTest {
 
@@ -23,5 +21,14 @@ class UserDaoTest {
                 .build();
         UserDao userDao = UserDao.getInstance();
         var result = userDao.save(user);
+    }
+    @Test
+    void findByUsernameAndPasswordTest(){
+        String username = "devKodstya5";
+        String password = "12345";
+
+        UserDao userDao = UserDao.getInstance();
+        System.out.println(userDao.findByUsernameAndPassword(username,password));
+
     }
 }
