@@ -1,5 +1,6 @@
 package by.kostya.servlet;
 
+import by.kostya.dto.UserDto;
 import by.kostya.service.UserService;
 import by.kostya.utils.JSPHelper;
 import by.kostya.utils.URLPath;
@@ -25,17 +26,19 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         userService.login(req.getParameter("username"),req.getParameter("password"))
-                .ifPresentOrElse((userDto) -> onLoginSuccess(req,resp), () -> onLoginFail(req,resp));
+                .ifPresentOrElse((userDto) -> onLoginSuccess(userDto,req,resp), () -> onLoginFail(req,resp));
     }
 
     @SneakyThrows
-    private void onLoginSuccess(HttpServletRequest req, HttpServletResponse resp) {
-//        resp.sendRedirect(req.getContextPath()+URLPath.MANE_PAGE_PATH);
-        req.getRequestDispatcher(JSPHelper.getPath("mainPage")).forward(req,resp);
+    private void onLoginSuccess(UserDto userDto, HttpServletRequest req, HttpServletResponse resp) {
+        req.getSession().setAttribute("user",userDto);
+        resp.sendRedirect(req.getContextPath()+URLPath.MAIN_PAGE_PATH);
     }
 
     @SneakyThrows
     private void onLoginFail(HttpServletRequest req, HttpServletResponse resp) {
+        req.setAttribute("error","Error username or password");
+        req.getSession().setAttribute("user",null);
         req.getRequestDispatcher(JSPHelper.getPath("login")).forward(req,resp);
     }
 }
