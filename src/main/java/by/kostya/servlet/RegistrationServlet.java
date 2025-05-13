@@ -40,6 +40,7 @@ public class RegistrationServlet extends HttpServlet {
         }
         try {
             userService.creatUser(userDto);
+            resp.sendRedirect(req.getContextPath()+URLPath.LOGIN_PATH);
         }catch (ConstraintViolationException | DuplicateException ex){
             req.setAttribute("errors_message",ex.getMessage());
             req.getRequestDispatcher(JSPHelper.getPath("registration")).forward(req, resp);
