@@ -1,5 +1,7 @@
 package by.kostya.servlet;
 
+import by.kostya.entity.Priority;
+import by.kostya.entity.Status;
 import by.kostya.utils.JSPHelper;
 import by.kostya.utils.URLPath;
 import jakarta.servlet.ServletException;
@@ -16,6 +18,8 @@ public class CreateTaskServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("status", Status.values());
+        req.setAttribute("priority", Priority.values());
         req.getRequestDispatcher(JSPHelper.getPath("createTask")).forward(req, resp);
     }
 }

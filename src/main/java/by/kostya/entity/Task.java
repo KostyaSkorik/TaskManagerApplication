@@ -2,15 +2,13 @@ package by.kostya.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Data
 @Builder
+@ToString(exclude = "user")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

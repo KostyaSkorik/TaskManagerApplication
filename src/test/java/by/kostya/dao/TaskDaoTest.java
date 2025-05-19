@@ -11,14 +11,6 @@ class TaskDaoTest {
     @Test
     void save() {
         TaskDao taskDao = TaskDao.getInstance();
-//        User user = User.builder()
-//                .username("kostya")
-//                .email("kostya@mail.ru")
-//                .passwordHash("52HashSaver")
-//                .createdAt(LocalDateTime.now())
-//                .isActive(true)
-//                .role(Role.ADMIN)
-//                .build();
         Task task = Task.builder()
                 .title("testTask")
                 .description("testssss")
@@ -29,5 +21,7 @@ class TaskDaoTest {
                 .updatedAt(LocalDateTime.now())
                 .build();
         taskDao.save(task,1L);
+
     }
+
 }
