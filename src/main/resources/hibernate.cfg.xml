@@ -14,7 +14,7 @@
     <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
     <mapping class="by.kostya.entity.User"/>
-<!--    <mapping class="by.kostya.entity.Task"/>-->
+    <mapping class="by.kostya.entity.Task"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
   </session-factory>

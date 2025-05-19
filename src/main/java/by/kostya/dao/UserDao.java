@@ -69,9 +69,6 @@ public class UserDao {
     public Optional<User> findByUsernameAndPassword(String username, String password){
         @Cleanup SessionFactory sessionFactory = HibernateUtil.openSessionFactory();
         @Cleanup Session session = sessionFactory.openSession();
-//        User user = jpaQuery.select(QUser.user).from(QUser.user).where(QUser.user.username.eq(username)
-//                .and(QUser.user.passwordHash.eq(BcryptUtils.generateHash(password)))).fetchFirst();
-//        return Optional.ofNullable(user);
         JPAQuery<User> jpaQuery = new JPAQuery<>(session);
         User user = jpaQuery.select(QUser.user).from(QUser.user).where(QUser.user.username.eq(username)).fetchOne();
         Optional<User> optionalUser = Optional.ofNullable(user);
@@ -80,6 +77,6 @@ public class UserDao {
         }else {
             return Optional.empty();
         }
-
     }
+
 }

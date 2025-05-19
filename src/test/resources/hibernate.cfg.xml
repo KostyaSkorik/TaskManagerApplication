@@ -16,6 +16,8 @@
 
 
     <mapping class="by.kostya.entity.User"/>
+    <mapping class="by.kostya.entity.Task"/>
+
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
   </session-factory>
