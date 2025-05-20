@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebFilter(value = {URLPath.MAIN_PAGE_PATH})
+@WebFilter(value = {URLPath.MAIN_PAGE_PATH, URLPath.CREATE_TASK_PATH, URLPath.SHOW_TASK_PATH})
 public class AuthorizationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

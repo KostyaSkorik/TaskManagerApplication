@@ -39,14 +39,6 @@
         <label for="description">Description</label>
         <input type="text" id="description" name="description" class="input-field" required><br>
 
-        <label for="status">Status:</label>
-        <select name="status" id="status" class="input-field">
-            <option value="">--Please choose status</option>
-            <c:forEach var="status" items="${requestScope.status}">
-                <option value="${status}">${status}</option>
-            </c:forEach>
-        </select>
-
         <label for="priority">Priority:</label>
         <select name="priority" id="priority" class="input-field">
             <option value="">--Please choose priority</option>
@@ -56,7 +48,7 @@
         </select>
 
         <label for="deadline_date">Deadline</label>
-        <input type="date" name="deadline_date" id="deadline_date" required><br>
+        <input type="datetime-local" name="deadline_date" id="deadline_date" required><br>
 
         <input type="submit" value="Create" class="input-field">
     </form>

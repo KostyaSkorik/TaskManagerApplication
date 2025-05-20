@@ -18,11 +18,11 @@ public class TaskDao {
         @Cleanup SessionFactory sessionFactory = HibernateUtil.openSessionFactory();
         @Cleanup Session session = sessionFactory.openSession();
         session.beginTransaction();
-//        session.flush();
         User user = session.find(User.class,userId);
         user.addTask(task);
         session.persist(task);
         session.getTransaction().commit();
         return task.getId();
     }
+
 }

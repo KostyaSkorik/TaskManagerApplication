@@ -14,7 +14,7 @@ class TaskDaoTest {
         Task task = Task.builder()
                 .title("testTask")
                 .description("testssss")
-                .status(Status.COMPLETED)
+                .status(Status.NEW)
                 .priority(Priority.HIGH)
                 .deadlineDate(LocalDateTime.now())
                 .createdAt(LocalDateTime.now())
