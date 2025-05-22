@@ -9,7 +9,7 @@ import jakarta.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 @WebFilter(URLPath.REGISTRATION_PATH)
-public class AttributeFilter implements Filter {
+public class RegistrationAttributeFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         servletRequest.setAttribute("roles", Role.values());
