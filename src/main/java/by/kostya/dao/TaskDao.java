@@ -1,8 +1,10 @@
 package by.kostya.dao;
 
+import by.kostya.entity.QUser;
 import by.kostya.entity.Task;
 import by.kostya.entity.User;
 import by.kostya.utils.HibernateUtil;
+import com.querydsl.jpa.impl.JPAQuery;
 import lombok.Cleanup;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,15 +16,21 @@ public class TaskDao {
         return INSTANCE;
     }
 
-    public Long save(Task task,Long userId){
+    public Long save(Task task,String userName){
         @Cleanup SessionFactory sessionFactory = HibernateUtil.openSessionFactory();
         @Cleanup Session session = sessionFactory.openSession();
+        JPAQuery<User> jpaQuery = new JPAQuery<>(session);
         session.beginTransaction();
-        User user = session.find(User.class,userId);
-        user.addTask(task);
-        session.persist(task);
-        session.getTransaction().commit();
-        return task.getId();
+        User user = jpaQuery.select(QUser.user).from(QUser.user).where(QUser.user.username.eq(userName)).fetchOne();
+        if(user!=null){
+            user.addTask(task);
+            session.persist(task);
+            session.getTransaction().commit();
+            return task.getId();
+        }else {
+            throw new NullPointerException("User is null");
+        }
+
     }
 
 }

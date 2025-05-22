@@ -20,7 +20,7 @@ class TaskDaoTest {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
-        taskDao.save(task,1L);
+        taskDao.save(task,"devKostya");
 
     }
 

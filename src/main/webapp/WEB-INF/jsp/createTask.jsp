@@ -52,6 +52,9 @@
 
         <input type="submit" value="Create" class="input-field">
     </form>
+    <c:if test="${not empty requestScope.timeError}">
+        <h3 style="color: red">${requestScope.timeError}</h3>
+    </c:if>
 </div>
 
 </body>
