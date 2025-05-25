@@ -23,5 +23,13 @@ class TaskDaoTest {
         taskDao.save(task,"devKostya");
 
     }
+    @Test
+    void showTaskByUserName(){
+        TaskDao taskDao = TaskDao.getInstance();
+        String userName = "devKostya";
+
+        System.out.println(taskDao.showTaskByUserName(userName));
+
+    }
 
 }

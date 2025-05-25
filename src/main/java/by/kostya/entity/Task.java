@@ -28,6 +28,7 @@ public class Task {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
+    //TODO поменять на LocalDate чтобы не хранить секунды
     private LocalDateTime updatedAt;
     @ManyToOne
     @JoinColumn(name = "user_id")

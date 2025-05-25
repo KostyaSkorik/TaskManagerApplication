@@ -1,5 +1,6 @@
 package by.kostya.dao;
 
+import by.kostya.entity.QTask;
 import by.kostya.entity.QUser;
 import by.kostya.entity.Task;
 import by.kostya.entity.User;
@@ -8,6 +9,8 @@ import com.querydsl.jpa.impl.JPAQuery;
 import lombok.Cleanup;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import java.util.List;
 
 public class TaskDao {
     private static final TaskDao INSTANCE = new TaskDao();
@@ -30,6 +33,11 @@ public class TaskDao {
         }else {
             throw new NullPointerException("User is null");
         }
+    }
+    public List<Task> showTaskByUserName(String userName){
+        @Cleanup SessionFactory sessionFactory = HibernateUtil.openSessionFactory();
+        @Cleanup Session session = sessionFactory.openSession();
+        return new JPAQuery<Task>(session).select(QTask.task).from(QTask.task).where(QTask.task.user.username.eq(userName)).fetch();
 
     }
 

@@ -14,4 +14,5 @@ public class TaskDto {
     String description;
     Priority priority;
     LocalDateTime deadline;
+    //TODO начать хранить тут и статус задачи
 }
