@@ -99,23 +99,26 @@
 <div class="viewport">
     <div class="carousel">
         <c:forEach items="${requestScope.tasks}" var="task">
-            <div class="carousel-item">
-                <div class="card">
-                    <div class="card__image"><img src="http://unsplash.it/300/?image=58" alt=""/>
-                        <div class="badge"><i class="fa fa-camera-retro"></i></div>
-                    </div>
-                    <div class="card__info">
-                        <h2 class="card__title">
-                                ${task.getTitle()}</h2>
-                        <div class="card__desc">
-                            <p>Description: ${task.getDescription()}</p>
-                            <p>Priority: ${task.getPriority()}</p>
-                            <p>Deadline: ${task.getDeadline().getYear()} - ${task.getDeadline().getMonth()}
-                                - ${task.getDeadline().getDayOfMonth()}</p>
+            <form action="${pageContext.request.contextPath}/updateTask" method="post">
+                <div class="carousel-item">
+                    <div class="card">
+                        <div class="card__image"><img src="http://unsplash.it/300/?image=58" alt=""/>
+                            <div class="badge"><i class="fa fa-camera-retro"></i></div>
+                        </div>
+                        <div class="card__info">
+                            <h2 class="card__title">
+                                    ${task.getTitle()}</h2>
+                            <div class="card__desc">
+                                <p>Description: ${task.getDescription()}</p>
+                                <p>Priority: ${task.getPriority()}</p>
+                                <p>Deadline: ${task.getDeadline().getYear()} - ${task.getDeadline().getMonth()}
+                                    - ${task.getDeadline().getDayOfMonth()}</p>
+                            </div>
                         </div>
                     </div>
+                    <input type="submit" value="Update" class="input-field">
                 </div>
-            </div>
+            </form>
         </c:forEach>
     </div>
 </div>
