@@ -1,7 +1,6 @@
 package by.kostya.mapper;
 
 import by.kostya.dto.TaskDto;
-import by.kostya.entity.Status;
 import by.kostya.entity.Task;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -25,7 +24,7 @@ public class TaskDtoMapper implements Mapper<TaskDto, Task>{
                 .description(from.getDescription())
                 .priority(from.getPriority())
                 .deadlineDate(from.getDeadline())
-                .status(Status.NEW)
+                .status(from.getStatus())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();

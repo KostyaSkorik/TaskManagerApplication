@@ -113,6 +113,7 @@
                                 <p>Priority: ${task.getPriority()}</p>
                                 <p>Deadline: ${task.getDeadline().getYear()} - ${task.getDeadline().getMonth()}
                                     - ${task.getDeadline().getDayOfMonth()}</p>
+                                <p>Status: ${task.getStatus()}</p>
                             </div>
                         </div>
                     </div>

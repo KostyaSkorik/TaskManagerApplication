@@ -3,6 +3,7 @@ package by.kostya.servlet;
 import by.kostya.dto.TaskDto;
 import by.kostya.dto.UserDto;
 import by.kostya.entity.Priority;
+import by.kostya.entity.Status;
 import by.kostya.service.TaskService;
 import by.kostya.utils.JSPHelper;
 import by.kostya.utils.URLPath;
@@ -33,6 +34,7 @@ public class CreateTaskServlet extends HttpServlet {
                 .description(req.getParameter("description"))
                 .priority(Priority.valueOf(req.getParameter("priority")))
                 .deadline(LocalDateTime.parse(req.getParameter("deadline_date")))
+                .status(Status.NEW)
                 .build();
         if(Duration.between(LocalDateTime.now(),taskDto.getDeadline()).toSeconds()<0){
             req.setAttribute("timeError","Invalid Deadline time");
@@ -41,7 +43,8 @@ public class CreateTaskServlet extends HttpServlet {
             req.setAttribute("timeError",null);
             UserDto userDto = (UserDto) req.getSession().getAttribute("user");
             taskService.addTask(taskDto,userDto.getUsername());
-            req.getRequestDispatcher(JSPHelper.getPath("createTask")).forward(req,resp);
+            req.getRequestDispatcher(JSPHelper.getPath("mainPage")).forward(req,resp);
+            resp.sendRedirect(URLPath.MAIN_PAGE_PATH);
         }
     }
 }
