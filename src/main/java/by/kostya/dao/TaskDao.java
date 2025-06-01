@@ -2,6 +2,7 @@ package by.kostya.dao;
 
 import by.kostya.entity.*;
 import by.kostya.utils.HibernateUtil;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.Cleanup;
 import org.hibernate.Session;
@@ -35,7 +36,14 @@ public class TaskDao {
     public List<Task> showTaskByUserName(String userName){
         @Cleanup SessionFactory sessionFactory = HibernateUtil.openSessionFactory();
         @Cleanup Session session = sessionFactory.openSession();
-        return new JPAQuery<Task>(session).select(QTask.task).from(QTask.task).where(QTask.task.user.username.eq(userName)).fetch();
+        QTask qtask = QTask.task;
+        JPAQuery<Task> query = new JPAQuery<>(session).select(qtask).from(qtask);
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        booleanBuilder.and(qtask.status.eq(Status.NEW));
+        booleanBuilder.and(qtask.user.username.eq(userName));
+        query.where(booleanBuilder);
+        return query.fetch();
     }
 
     public void update(Long taskId, Priority priority, Status status, LocalDateTime deadLine) {
