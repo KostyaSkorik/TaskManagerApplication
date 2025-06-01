@@ -21,7 +21,7 @@
     <style>
         body {
             min-height: 100vh;
-            font-family: karla;
+            font-family: karla, serif;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -126,6 +126,9 @@
         <c:forEach items="${requestScope.tasks}" var="task">
             <form action="${pageContext.request.contextPath}/updateTask" method="get">
                 <input type="hidden" name="taskId" value="${task.getId()}">
+                <input type="hidden" name="taskStatus" value="${task.getStatus()}">
+                <input type="hidden" name="taskPriority" value="${task.getPriority()}">
+                <input type="hidden" name="taskTitle" value="${task.getTitle()}">
                 <div class="carousel-item">
                     <div class="card">
                         <div class="card__image"><img src="http://unsplash.it/300/?image=58" alt=""/>

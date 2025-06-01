@@ -44,7 +44,7 @@ public class CreateTaskServlet extends HttpServlet {
             UserDto userDto = (UserDto) req.getSession().getAttribute("user");
             taskService.addTask(taskDto,userDto.getUsername());
             req.getRequestDispatcher(JSPHelper.getPath("mainPage")).forward(req,resp);
-            resp.sendRedirect(URLPath.MAIN_PAGE_PATH);
+            resp.sendRedirect(req.getContextPath()+URLPath.MAIN_PAGE_PATH);
         }
     }
 }

@@ -2,12 +2,15 @@ package by.kostya.service;
 
 import by.kostya.dao.TaskDao;
 import by.kostya.dto.TaskDto;
+import by.kostya.entity.Priority;
+import by.kostya.entity.Status;
 import by.kostya.entity.Task;
 import by.kostya.mapper.TaskDtoMapper;
 import by.kostya.mapper.TaskMapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -30,5 +33,9 @@ public class TaskService {
     }
     public List<TaskDto> showTasks(String userName){
         return taskDao.showTaskByUserName(userName).stream().map(taskMapper::mapFrom).toList();
+    }
+
+    public void update(Long taskId, Priority priority, Status status, LocalDateTime deadLine) {
+        taskDao.update(taskId,priority,status,deadLine);
     }
 }
