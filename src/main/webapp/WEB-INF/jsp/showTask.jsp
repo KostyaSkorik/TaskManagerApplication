@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <!-- CSS Flickity -->
@@ -46,6 +47,8 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
             width: 500px;
             height: 500px;
+            display: flex;
+            flex-direction: column; /* Добавлено для правильного расположения элементов */
         }
 
         .card__image {
@@ -90,6 +93,28 @@
         .card__desc {
             opacity: 0.5;
         }
+
+        .card__actions {
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            margin-top: auto; /* Прижимает к низу карточки */
+        }
+
+        .input-field {
+            padding: 10px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .input-field:hover {
+            background-color: #45a049;
+        }
     </style>
 
 
@@ -99,7 +124,8 @@
 <div class="viewport">
     <div class="carousel">
         <c:forEach items="${requestScope.tasks}" var="task">
-            <form action="${pageContext.request.contextPath}/updateTask" method="post">
+            <form action="${pageContext.request.contextPath}/updateTask" method="get">
+                <input type="hidden" name="taskId" value="${task.getId()}">
                 <div class="carousel-item">
                     <div class="card">
                         <div class="card__image"><img src="http://unsplash.it/300/?image=58" alt=""/>
@@ -116,8 +142,10 @@
                                 <p>Status: ${task.getStatus()}</p>
                             </div>
                         </div>
+                        <div class="card__actions">
+                            <input type="submit" value="Update" class="input-field">
+                        </div>
                     </div>
-                    <input type="submit" value="Update" class="input-field">
                 </div>
             </form>
         </c:forEach>

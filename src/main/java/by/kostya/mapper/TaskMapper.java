@@ -22,6 +22,7 @@ public class TaskMapper implements Mapper<Task, TaskDto> {
                 .priority(from.getPriority())
                 .deadline(from.getDeadlineDate())
                 .status(from.getStatus())
+                .id(from.getId())
                 .build();
     }
 }

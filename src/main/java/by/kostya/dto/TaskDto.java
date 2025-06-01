@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Value
 @Builder
 public class TaskDto {
+    Long id;
     String title;
     String description;
     Priority priority;
