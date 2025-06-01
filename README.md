@@ -61,7 +61,7 @@ CREATE TABLE tasks (
 
 ## Сборка проекта
 ```
-mvn clean packge
+mvn clean package
 ```
 
 ## Использование
