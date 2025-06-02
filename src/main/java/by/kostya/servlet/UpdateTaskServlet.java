@@ -29,8 +29,12 @@ public class UpdateTaskServlet extends HttpServlet {
         Priority priority = Priority.valueOf(req.getParameter("priority"));
         Status status = Status.valueOf(req.getParameter("status"));
         //TODO Сделать валидацию времени
-        LocalDateTime deadLine = LocalDateTime.parse(req.getParameter("deadline_date"));
-        taskService.update(Long.valueOf(req.getParameter("taskId")),priority,status,deadLine);
+        if(req.getParameter("deadline_date").isEmpty()){
+            taskService.update(Long.valueOf(req.getParameter("taskId")),priority,status,null);
+        }else {
+            LocalDateTime deadLine = LocalDateTime.parse(req.getParameter("deadline_date"));
+            taskService.update(Long.valueOf(req.getParameter("taskId")),priority,status,deadLine);
+        }
         resp.sendRedirect(req.getContextPath()+URLPath.MAIN_PAGE_PATH);
     }
 }

@@ -4,6 +4,7 @@ import by.kostya.entity.*;
 import by.kostya.utils.FiltersParam;
 import by.kostya.utils.HibernateUtil;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.Cleanup;
 import org.hibernate.Session;
@@ -51,7 +52,11 @@ public class TaskDao {
             booleanBuilder.and(qtask.priority.eq(priority));
         }
 
+
+        OrderSpecifier<LocalDateTime> orderSpecifier = qtask.deadlineDate.desc();
+
         query.where(booleanBuilder);
+        query.orderBy(orderSpecifier);
         return query.fetch();
     }
 
@@ -63,6 +68,7 @@ public class TaskDao {
         task.setPriority(priority);
         task.setStatus(status);
         task.setDeadlineDate(deadLine);
+        task.setUpdatedAt(LocalDateTime.now());
         session.flush();
         session.getTransaction().commit();
     }
