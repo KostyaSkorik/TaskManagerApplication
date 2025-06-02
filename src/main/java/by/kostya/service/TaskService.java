@@ -7,6 +7,7 @@ import by.kostya.entity.Status;
 import by.kostya.entity.Task;
 import by.kostya.mapper.TaskDtoMapper;
 import by.kostya.mapper.TaskMapper;
+import by.kostya.utils.FiltersParam;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -31,8 +32,8 @@ public class TaskService {
         Task task = taskDtoMapper.mapFrom(taskDto);
         return taskDao.save(task,userName);
     }
-    public List<TaskDto> showTasks(String userName){
-        return taskDao.showTaskByUserName(userName).stream().map(taskMapper::mapFrom).toList();
+    public List<TaskDto> showTasks(String userName, FiltersParam filtersParam){
+        return taskDao.showTaskByUserName(userName, filtersParam).stream().map(taskMapper::mapFrom).toList();
     }
 
     public void update(Long taskId, Priority priority, Status status, LocalDateTime deadLine) {

@@ -9,7 +9,7 @@ import jakarta.servlet.annotation.WebFilter;
 
 import java.io.IOException;
 
-@WebFilter(value = {URLPath.CREATE_TASK_PATH,URLPath.UPDATE_TASK_PATH})
+@WebFilter(value = {URLPath.CREATE_TASK_PATH,URLPath.UPDATE_TASK_PATH,URLPath.SHOW_TASK_PATH})
 public class CreateTaskAttributeFilter implements Filter {
 
     @Override

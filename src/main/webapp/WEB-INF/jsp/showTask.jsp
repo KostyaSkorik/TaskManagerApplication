@@ -22,16 +22,17 @@
         body {
             min-height: 100vh;
             font-family: karla, serif;
-            display: flex;
+            display: block;
             align-items: center;
             justify-content: center;
         }
 
         .viewport {
             width: 1000px;
-            height: 600px;
+            height: 650px;
             overflow: hidden;
             background-color: #fafafa;
+            margin: 40px auto 0 auto;
             /*border: 1px solid #222;*/
         }
 
@@ -49,6 +50,7 @@
             height: 500px;
             display: flex;
             flex-direction: column; /* Добавлено для правильного расположения элементов */
+
         }
 
         .card__image {
@@ -101,6 +103,15 @@
             margin-top: auto; /* Прижимает к низу карточки */
         }
 
+        .card__empty {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
         .input-field {
             padding: 10px 30px;
             background-color: #4CAF50;
@@ -110,6 +121,7 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s;
+            margin-top: 10px;
         }
 
         .input-field:hover {
@@ -121,37 +133,81 @@
 </head>
 
 <body>
+<div id="filter-param"
+     style="width: 100%; background: #fff; padding: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center;">
+    <form action="${pageContext.request.contextPath}/showTask" method="post" style="display: inline-block;">
+        <label for="priorityFilter">Priority:</label>
+        <select name="priorityFilter" id="priorityFilter" class="input-field">
+            <option value="">--Choose Priority Filter--</option>
+            <c:forEach var="priority" items="${requestScope.priority}">
+                <c:if test="${priority ne param.taskPriority}">
+                    <option value="${priority}">${priority}</option>
+                </c:if>
+            </c:forEach>
+        </select>
+        <label for="statusFilter">Status:</label>
+        <select name="statusFilter" id="statusFilter" class="input-field" onchange="checkStatus()">
+            <option value="">--Choose Status Filter--</option>
+            <c:forEach var="status" items="${requestScope.status}">
+                <c:if test="${status ne param.taskStatus}">
+                    <option value="${status}">${status}</option>
+                </c:if>
+            </c:forEach>
+        </select><br>
+        <input type="submit" value="Show" class="input-field">
+    </form>
+</div>
 <div class="viewport">
     <div class="carousel">
-        <c:forEach items="${requestScope.tasks}" var="task">
-            <form action="${pageContext.request.contextPath}/updateTask" method="get">
-                <input type="hidden" name="taskId" value="${task.getId()}">
-                <input type="hidden" name="taskStatus" value="${task.getStatus()}">
-                <input type="hidden" name="taskPriority" value="${task.getPriority()}">
-                <input type="hidden" name="taskTitle" value="${task.getTitle()}">
+        <c:choose>
+            <c:when test="${not empty requestScope.tasks}">
+                <c:forEach items="${requestScope.tasks}" var="task">
+                    <form action="${pageContext.request.contextPath}/updateTask" method="get">
+                        <input type="hidden" name="taskId" value="${task.getId()}">
+                        <input type="hidden" name="taskStatus" value="${task.getStatus()}">
+                        <input type="hidden" name="taskPriority" value="${task.getPriority()}">
+                        <input type="hidden" name="taskTitle" value="${task.getTitle()}">
+                        <div class="carousel-item">
+                            <div class="card">
+                                <div class="card__image"><img src="http://unsplash.it/300/?image=58" alt=""/>
+                                    <div class="badge"><i class="fa fa-camera-retro"></i></div>
+                                </div>
+                                <div class="card__info">
+                                    <h2 class="card__title">
+                                            ${task.getTitle()}</h2>
+                                    <div class="card__desc">
+                                        <p>Description: ${task.getDescription()}</p>
+                                        <p>Priority: ${task.getPriority()}</p>
+                                        <p>Deadline: ${task.getDeadline().getYear()} - ${task.getDeadline().getMonth()}
+                                            - ${task.getDeadline().getDayOfMonth()}</p>
+                                        <p>Status: ${task.getStatus()}</p>
+                                    </div>
+                                </div>
+                                <div class="card__actions">
+                                    <input type="submit" value="Update" class="input-field">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
                 <div class="carousel-item">
                     <div class="card">
                         <div class="card__image"><img src="http://unsplash.it/300/?image=58" alt=""/>
                             <div class="badge"><i class="fa fa-camera-retro"></i></div>
                         </div>
-                        <div class="card__info">
-                            <h2 class="card__title">
-                                    ${task.getTitle()}</h2>
-                            <div class="card__desc">
-                                <p>Description: ${task.getDescription()}</p>
-                                <p>Priority: ${task.getPriority()}</p>
-                                <p>Deadline: ${task.getDeadline().getYear()} - ${task.getDeadline().getMonth()}
-                                    - ${task.getDeadline().getDayOfMonth()}</p>
-                                <p>Status: ${task.getStatus()}</p>
+                        <div class="carousel-item">
+                            <div class="card__empty" style="padding-top: 150px">
+                                <h2 class="card__title">No tasks</h2>
                             </div>
-                        </div>
-                        <div class="card__actions">
-                            <input type="submit" value="Update" class="input-field">
                         </div>
                     </div>
                 </div>
-            </form>
-        </c:forEach>
+            </c:otherwise>
+        </c:choose>
+
+
     </div>
 </div>
 </body>

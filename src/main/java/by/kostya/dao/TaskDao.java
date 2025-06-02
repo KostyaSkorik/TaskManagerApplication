@@ -1,6 +1,7 @@
 package by.kostya.dao;
 
 import by.kostya.entity.*;
+import by.kostya.utils.FiltersParam;
 import by.kostya.utils.HibernateUtil;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -33,15 +34,23 @@ public class TaskDao {
             throw new NullPointerException("User is null");
         }
     }
-    public List<Task> showTaskByUserName(String userName){
+    public List<Task> showTaskByUserName(String userName, FiltersParam filtersParam){
         @Cleanup SessionFactory sessionFactory = HibernateUtil.openSessionFactory();
         @Cleanup Session session = sessionFactory.openSession();
         QTask qtask = QTask.task;
         JPAQuery<Task> query = new JPAQuery<>(session).select(qtask).from(qtask);
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-
-        booleanBuilder.and(qtask.status.eq(Status.NEW));
         booleanBuilder.and(qtask.user.username.eq(userName));
+
+        if(!filtersParam.getStatusFilter().isEmpty()){
+            Status status = Status.valueOf(filtersParam.getStatusFilter());
+            booleanBuilder.and(qtask.status.eq(status));
+        }
+        if(!filtersParam.getPriorityFilter().isEmpty()){
+            Priority priority = Priority.valueOf(filtersParam.getPriorityFilter());
+            booleanBuilder.and(qtask.priority.eq(priority));
+        }
+
         query.where(booleanBuilder);
         return query.fetch();
     }

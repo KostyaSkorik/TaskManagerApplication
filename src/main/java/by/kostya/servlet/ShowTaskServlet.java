@@ -2,6 +2,7 @@ package by.kostya.servlet;
 
 import by.kostya.dto.UserDto;
 import by.kostya.service.TaskService;
+import by.kostya.utils.FiltersParam;
 import by.kostya.utils.JSPHelper;
 import by.kostya.utils.URLPath;
 import jakarta.servlet.ServletException;
@@ -19,9 +20,29 @@ public class ShowTaskServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserDto sessionUser = (UserDto) req.getSession().getAttribute("user");
-        req.setAttribute("tasks",taskService.showTasks(sessionUser.getUsername()));
+        UserDto sessionUser = getUserDto(req);
+        FiltersParam filtersParam = FiltersParam.builder()
+                .statusFilter("")
+                .priorityFilter("")
+                .build();
+        req.setAttribute("tasks", taskService.showTasks(sessionUser.getUsername(), filtersParam));
         req.getRequestDispatcher(JSPHelper.getPath("showTask")).forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        FiltersParam filtersParam = FiltersParam.builder()
+                .statusFilter(req.getParameter("statusFilter"))
+                .priorityFilter(req.getParameter("priorityFilter"))
+                .build();
+        UserDto sessionUser = getUserDto(req);
+        req.setAttribute("tasks", taskService.showTasks(sessionUser.getUsername(), filtersParam));
+        req.getRequestDispatcher(JSPHelper.getPath("showTask")).forward(req, resp);
+
+    }
+
+    public UserDto getUserDto(HttpServletRequest req) {
+        return (UserDto) req.getSession().getAttribute("user");
     }
 }
 

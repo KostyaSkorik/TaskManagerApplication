@@ -1,6 +1,7 @@
 package by.kostya.dao;
 
 import by.kostya.entity.*;
+import by.kostya.utils.FiltersParam;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -28,7 +29,7 @@ class TaskDaoTest {
         TaskDao taskDao = TaskDao.getInstance();
         String userName = "devKostya";
 
-        System.out.println(taskDao.showTaskByUserName(userName));
+        System.out.println(taskDao.showTaskByUserName(userName, FiltersParam.builder().build()));
 
     }
 

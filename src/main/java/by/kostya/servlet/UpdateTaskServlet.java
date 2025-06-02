@@ -28,6 +28,7 @@ public class UpdateTaskServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Priority priority = Priority.valueOf(req.getParameter("priority"));
         Status status = Status.valueOf(req.getParameter("status"));
+        //TODO Сделать валидацию времени
         LocalDateTime deadLine = LocalDateTime.parse(req.getParameter("deadline_date"));
         taskService.update(Long.valueOf(req.getParameter("taskId")),priority,status,deadLine);
         resp.sendRedirect(req.getContextPath()+URLPath.MAIN_PAGE_PATH);
