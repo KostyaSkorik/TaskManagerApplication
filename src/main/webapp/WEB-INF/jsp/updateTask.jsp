@@ -35,10 +35,15 @@
     </style>
 </head>
 <body>
+
 <div class="createTask-container">
     <h2 class="createTask-heading">Update Task "${param.taskTitle}"</h2>
     <form action="${pageContext.request.contextPath}/updateTask" method=post>
         <input type="hidden" name="taskId" value="${param.taskId}">
+        <input type="hidden" name="taskStatus" value="${param.taskStatus}">
+        <input type="hidden" name="taskPriority" value="${param.taskPriority}">
+        <input type="hidden" name="taskTitle" value="${param.taskTitle}">
+
         <label for="priority">Priority:</label>
         <select name="priority" id="priority" class="input-field">
             <option value=${param.taskPriority}>${param.taskPriority}</option>
@@ -64,8 +69,8 @@
 
         <input type="submit" value="Update" class="input-field">
     </form>
-    <c:if test="${not empty requestScope.timeError}">
-        <h3 style="color: red">${requestScope.timeError}</h3>
+    <c:if test="${not empty param.timeError}">
+        <h3 style="color: red">${param.timeError}</h3>
     </c:if>
 </div>
 <script>
