@@ -51,12 +51,19 @@ public class TaskDao {
             Priority priority = Priority.valueOf(filtersParam.getPriorityFilter());
             booleanBuilder.and(qtask.priority.eq(priority));
         }
+        if(!filtersParam.getSortedParam().isEmpty()){
+            if(filtersParam.getSortedParam().equals("Priority")){
+                OrderSpecifier<Priority> orderSpecifierPriority = qtask.priority.desc();
+                query.orderBy(orderSpecifierPriority);
+            }
+            if(filtersParam.getSortedParam().equals("DeadLine")){
+                OrderSpecifier<LocalDateTime> orderSpecifierDeadLine = qtask.deadlineDate.asc();
+                query.orderBy(orderSpecifierDeadLine);
+            }
 
-
-        OrderSpecifier<LocalDateTime> orderSpecifier = qtask.deadlineDate.desc();
-
+        }
+        //TODO продолжить логику сортировки
         query.where(booleanBuilder);
-        query.orderBy(orderSpecifier);
         return query.fetch();
     }
 

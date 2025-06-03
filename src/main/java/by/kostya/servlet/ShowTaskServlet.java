@@ -24,6 +24,7 @@ public class ShowTaskServlet extends HttpServlet {
         FiltersParam filtersParam = FiltersParam.builder()
                 .statusFilter("")
                 .priorityFilter("")
+                .sortedParam("")
                 .build();
         req.setAttribute("tasks", taskService.showTasks(sessionUser.getUsername(), filtersParam));
         req.getRequestDispatcher(JSPHelper.getPath("showTask")).forward(req, resp);
@@ -34,6 +35,7 @@ public class ShowTaskServlet extends HttpServlet {
         FiltersParam filtersParam = FiltersParam.builder()
                 .statusFilter(req.getParameter("statusFilter"))
                 .priorityFilter(req.getParameter("priorityFilter"))
+                .sortedParam(req.getParameter("sortedParam"))
                 .build();
         UserDto sessionUser = getUserDto(req);
         req.setAttribute("tasks", taskService.showTasks(sessionUser.getUsername(), filtersParam));

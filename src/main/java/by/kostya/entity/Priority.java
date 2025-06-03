@@ -1,7 +1,10 @@
 package by.kostya.entity;
 
-public enum Priority {
+
+public enum Priority{
     LOW,
     MEDIUM,
-    HIGH
+    HIGH,
+    CRITICAL
+
 }

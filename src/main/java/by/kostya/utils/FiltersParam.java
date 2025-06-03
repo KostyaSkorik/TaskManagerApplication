@@ -11,4 +11,5 @@ import lombok.Value;
 public class FiltersParam {
     String statusFilter;
     String priorityFilter;
+    String sortedParam;
 }

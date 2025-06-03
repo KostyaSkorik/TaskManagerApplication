@@ -3,6 +3,8 @@ package by.kostya.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.LocalDateTime;
 
@@ -21,8 +23,11 @@ public class Task {
     private String description;
     @Enumerated(EnumType.STRING)
     private Status status;
+
     @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private Priority priority;
+
     @Column(name = "deadline_date")
     private LocalDateTime deadlineDate;
     @Column(name = "created_at")

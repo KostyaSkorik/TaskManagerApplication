@@ -154,9 +154,16 @@
                 </c:if>
             </c:forEach>
         </select><br>
+        <label for="sortedParam">Sorted by</label>
+        <select name="sortedParam" id="sortedParam" class="input-field">
+            <option value="">--Choose Sorted Param--</option>
+            <option value="DeadLine">Deadline</option>
+            <option value="Priority">Priority</option>
+        </select>
         <input type="submit" value="Show" class="input-field">
     </form>
 </div>
+
 <div class="viewport">
     <div class="carousel">
         <c:choose>
