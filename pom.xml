@@ -91,11 +91,6 @@
       <artifactId>hypersistence-utils-hibernate-63</artifactId>
       <version>3.9.10</version>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>org.webjars.bower</groupId>-->
-<!--      <artifactId>flickity</artifactId>-->
-<!--      <version>2.0.3</version>-->
-<!--    </dependency>-->
 
   </dependencies>
   <build>
