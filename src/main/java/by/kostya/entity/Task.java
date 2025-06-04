@@ -24,7 +24,7 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private Priority priority;
 

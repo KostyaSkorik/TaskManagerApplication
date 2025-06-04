@@ -64,6 +64,7 @@ public class TaskDao {
         }
         //TODO продолжить логику сортировки
         query.where(booleanBuilder);
+        System.out.println(query.fetch());
         return query.fetch();
     }
 
